@@ -23,12 +23,19 @@ ext {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.h2database/h2
+//    runtimeOnly group: 'com.h2database', name: 'h2', version: '2.1.214'
+    runtimeOnly group: 'com.h2database', name: 'h2', version: '1.3.176'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 }
 
 dependencyManagement {
