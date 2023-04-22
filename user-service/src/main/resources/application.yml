@@ -15,7 +15,9 @@ spring:
       path: /h2-console
 eureka:
   instance:
+    prefer-ip-address: true
     instance-id: ${spring.cloud.client.hostname}:${spring.application.instnace_id:${random.value}}
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
   client:
     register-with-eureka: true # eureka에 등록
     fetch-registry: true
