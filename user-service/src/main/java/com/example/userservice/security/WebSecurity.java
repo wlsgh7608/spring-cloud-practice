@@ -2,6 +2,7 @@ package com.example.userservice.security;
 
 import com.example.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,9 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/users/**").permitAll();
         http.authorizeRequests().antMatchers("/**")
-//                .hasIpAddress("127.0.0.1")
                 .access("hasIpAddress('" +  "192.168.126.1" + "')")
 //                .access("hasIpAddress('" +  "127.0.0.1" + "')")
                 .and()
