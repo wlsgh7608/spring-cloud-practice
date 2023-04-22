@@ -30,10 +30,10 @@ spring:
           predicates:
             - Path=/catalog-service/**
 
-#        - id: user-service
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/user-service/**
+        #        - id: user-service
+        #          uri: lb://user-service
+        #          predicates:
+        #            - Path=/user-service/**
 
         - id: user-service
           uri: lb://user-service
@@ -41,7 +41,7 @@ spring:
             - Path=/user-service/login
             - Method=POST
           filters:
-            - RemoveRequestHeader = Cookie;
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*) , /$\{segment}
 
 
@@ -51,7 +51,7 @@ spring:
             - Path=/user-service/users
             - Method=POST
           filters:
-            - RemoveRequestHeader = Cookie;
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*) , /$\{segment}
 
 
@@ -61,28 +61,28 @@ spring:
             - Path=/user-service/**
             - Method=GET
           filters:
-            - RemoveRequestHeader = Cookie;
+            - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*) , /$\{segment}
 
 
-        - id : first-service
-          uri : lb://my-first-service
+        - id: first-service
+          uri: lb://my-first-service
           predicates:
             - Path=/first-service/**
           filters:
-#            - AddRequestHeader=first-request, first-request-header2
-#            - AddResponseHeader=first-response, first-response-header2
-             - CustomFilter
-        - id : second-service
-          uri : lb://my-second-service
+            #            - AddRequestHeader=first-request, first-request-header2
+            #            - AddResponseHeader=first-response, first-response-header2
+            - CustomFilter
+        - id: second-service
+          uri: lb://my-second-service
           predicates:
             - Path=/second-service/**
           filters:
-#            - AddRequestHeader=second-request, second-request-header2
-#            - AddResponseHeader=second-response, second-response-header2
-             - name: CustomFilter
-             - name: LoggingFilter
-               args:
-                 baseMessage: Hi, there
-                 preLogger: true
-                 postLogger: true
+            #            - AddRequestHeader=second-request, second-request-header2
+            #            - AddResponseHeader=second-response, second-response-header2
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: Hi, there
+                preLogger: true
+                postLogger: true
