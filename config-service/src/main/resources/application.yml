@@ -5,9 +5,13 @@ server:
 spring:
   application:
     name: config-service
+#  profiles:
+#    active: native
   cloud:
     config:
       server:
+#        native:
+#          search-locations: file://$(
         git:
           uri: https://github.com/wlsgh7608/spring-cloud-config.git
 
