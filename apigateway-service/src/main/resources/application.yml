@@ -73,6 +73,15 @@ spring:
             - RewritePath=/user-service/(?<segment>.*) , /$\{segment}
             - AuthorizationHeaderFilter
 
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/actuator/**
+            - Method=GET,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*) , /$\{segment}
+
 
         - id: first-service
           uri: lb://my-first-service
@@ -95,3 +104,10 @@ spring:
                 baseMessage: Hi, there
                 preLogger: true
                 postLogger: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans,httptrace
