@@ -4,6 +4,8 @@ import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.UserService;
 import com.example.userservice.vo.RequestLogin;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -65,7 +68,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         
         // id , password 인증성공시 작업
         String username = ((User) authResult.getPrincipal()).getUsername();
-        UserDto userDto = userService.getUserDetailsByEmail(username);
+        UserDto userDetails = userService.getUserDetailsByEmail(username);
+        String token = Jwts.builder()
+                .setSubject(userDetails.getUserId()) // toekn의 userId로 토큰만듦
+                .setExpiration(new Date(System.currentTimeMillis()+
+                        Long.parseLong(env.getProperty("token.expiration_time")))) //숫자형태로 변환
+                .signWith(SignatureAlgorithm.HS512,env.getProperty("token.secret")) // 암호화
+                .compact();
+
+        response.addHeader("token",token);
+         response.addHeader("userId", userDetails.getUserId());
 
         log.debug( ((User)authResult.getPrincipal()).getUsername() );
 
