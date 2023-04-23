@@ -20,6 +20,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
 
     public AuthorizationHeaderFilter(Environment env) {
+        super(Config.class);
         this.env = env;
     }
 
@@ -48,10 +49,12 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         boolean returnValue = true;
         String subject = null;
         try {
-            subject = Jwts.parser().setSigningKey(env.getProperty("token.secret"))
-                    .parseClaimsJwt(jwt).getBody()
+            String key = env.getProperty("token.secret");
+            subject = Jwts.parser().setSigningKey(key)
+                    .parseClaimsJws(jwt).getBody()
                     .getSubject();
         } catch (Exception ex) {
+            System.out.println("ex = " + ex);
             returnValue = false;
         }
 

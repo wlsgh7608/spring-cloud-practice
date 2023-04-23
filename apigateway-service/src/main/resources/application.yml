@@ -12,6 +12,10 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+token:
+  secret: user_token
+
+
 spring:
   application:
     name: apigateway-service
@@ -91,5 +95,3 @@ spring:
                 baseMessage: Hi, there
                 preLogger: true
                 postLogger: true
-token:
-  secret: user_token
