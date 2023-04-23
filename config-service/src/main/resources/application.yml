@@ -9,5 +9,5 @@ spring:
     config:
       server:
         git:
-          uri: file:///Users/wlsgh/Desktop/config_folder/git-local-repo
+          uri: https://github.com/wlsgh7608/spring-cloud-config.git
 
