@@ -67,6 +67,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*) , /$\{segment}
+            - AuthorizationHeaderFilter
 
 
         - id: first-service
@@ -90,3 +91,5 @@ spring:
                 baseMessage: Hi, there
                 preLogger: true
                 postLogger: true
+token:
+  secret: user_token
