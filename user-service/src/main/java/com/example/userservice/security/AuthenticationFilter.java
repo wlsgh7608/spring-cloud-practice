@@ -1,8 +1,13 @@
 package com.example.userservice.security;
 
+import com.example.userservice.dto.UserDto;
+import com.example.userservice.service.UserService;
 import com.example.userservice.vo.RequestLogin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -18,6 +23,19 @@ import java.util.ArrayList;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private UserService userService;
+    private Environment env;
+
+
+
+
+    public AuthenticationFilter(AuthenticationManager authenticationManager,
+                                UserService userService,
+                                Environment env) {
+        super.setAuthenticationManager(authenticationManager);
+        this.userService = userService;
+        this.env = env;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -46,6 +64,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult) throws IOException, ServletException {
         
         // id , password 인증성공시 작업
+        String username = ((User) authResult.getPrincipal()).getUsername();
+        UserDto userDto = userService.getUserDetailsByEmail(username);
+
         log.debug( ((User)authResult.getPrincipal()).getUsername() );
 
     }
