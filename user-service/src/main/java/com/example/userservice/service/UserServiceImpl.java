@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
 
 
-        String orderUrl = String.format(env.getProperty("order_service.url"), userId);
+//        String orderUrl = String.format(env.getProperty("order_service.url"), userId);
         //RestTemplate
 //        ResponseEntity<List<ResponseOrder>> orderListResponse =
 //                restTemplate.exchange(orderUrl,
@@ -94,12 +94,15 @@ public class UserServiceImpl implements UserService {
 //        List<ResponseOrder> orderList = orderListResponse.getBody();
 
         // FeignClient
-        List<ResponseOrder> orderList = null;
-        try {
-            orderList = orderServiceClient.getOrders(userId);
-        } catch (FeignException ex) {
-            log.error(ex.getMessage());
-        }
+//        List<ResponseOrder> orderList = null;
+//        try {
+//            orderList = orderServiceClient.getOrders(userId);
+//        } catch (FeignException ex) {
+//            log.error(ex.getMessage());
+//        }
+        
+        /* Error Decoder가 에러 핸들링*/
+        List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
 
         userDto.setOrders(orderList);
 
