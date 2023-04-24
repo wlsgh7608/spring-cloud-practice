@@ -1,2 +1,6 @@
 encrypt:
-  key : abcdefg
+  key-store:
+    location: file:///${user.home}/Desktop/keyStore/apiEncryptionKey.jks
+    password: test1234
+    alias: apiEncryptionKey
+#  key : abcdefg

@@ -12,8 +12,8 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
-token:
-  secret: user_token
+#token:
+#  secret: user_token_native_user_service
 
 
 spring:
