@@ -35,8 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/actuator/**").permitAll();
         http.authorizeRequests().antMatchers("/**")
-//                .access("hasIpAddress('" +  "192.168.56.1" + "')") // TODO
-                .access("hasIpAddress('" +  "192.168.126.1" + "')") //notebook
+                .access("hasIpAddress('" +  "192.168.56.1" + "')") // TODO
+//                .access("hasIpAddress('" +  "192.168.126.1" + "')") //notebook
 //                .access("hasIpAddress('" +  "127.0.0.1" + "')")
                 .and()
                 .addFilter(getAuthenticationFilter()); // IP address
