@@ -5,8 +5,11 @@ spring:
   application:
     name: order-service
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul
+    username: root
+    password: admin
+
   h2:
     console:
       enabled: true
