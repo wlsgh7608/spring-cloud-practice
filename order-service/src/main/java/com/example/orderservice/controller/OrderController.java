@@ -2,6 +2,7 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.OrderEntity;
+import com.example.orderservice.messagequeue.KafkaProducer;
 import com.example.orderservice.service.OrderService;
 import com.example.orderservice.vo.RequestOrder;
 import com.example.orderservice.vo.ResponseOrder;
@@ -23,12 +24,15 @@ import java.util.List;
 public class OrderController {
     Environment env;
     OrderService orderService;
+    KafkaProducer kafkaProducer;
 
     @Autowired
-    public OrderController(Environment env, OrderService orderService) {
+    public OrderController(Environment env, OrderService orderService, KafkaProducer kafkaProducer) {
         this.env = env;
         this.orderService = orderService;
+        this.kafkaProducer = kafkaProducer;
     }
+
     @GetMapping("/health_check")
     public String status() {
         return String.format("It's Working in User Service on Port %S",
@@ -42,11 +46,14 @@ public class OrderController {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
+        // jpa
         OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
         OrderDto createdOrder = orderService.createOrder(orderDto);
 
         ResponseOrder responseOrder= mapper.map(createdOrder,ResponseOrder.class);
+        // kafka message 추가적으로 동작
+        kafkaProducer.send("example-category-topic", orderDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
     }

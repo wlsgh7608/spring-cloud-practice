@@ -33,6 +33,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
     implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'org.springframework.kafka:spring-kafka'
 
 }
 
