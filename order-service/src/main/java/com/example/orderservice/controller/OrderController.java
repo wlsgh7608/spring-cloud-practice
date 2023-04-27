@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -72,7 +71,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
     }
     @GetMapping("/{userId}/orders")
-    public ResponseEntity<List<ResponseOrder>> getOrder(@PathVariable("userId") String userId){
+    public ResponseEntity<List<ResponseOrder>> getOrder(@PathVariable("userId") String userId) throws Exception{
         log.info("Before retrieve order data");
         Iterable<OrderEntity> orderList = orderService.getOrdersByUserId(userId);
         List<ResponseOrder> result = new ArrayList<>();
@@ -80,6 +79,14 @@ public class OrderController {
             result.add(new ModelMapper().map(v, ResponseOrder.class));
         });
         log.info("after receive order data");
+        try{
+            Thread.sleep(1000);
+            throw new Exception("LOG ");
+        }catch (InterruptedException ex){
+            log.warn(ex.getMessage());
+        }
+
+
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

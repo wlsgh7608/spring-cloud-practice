@@ -47,7 +47,8 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-circuitbreaker-resilience4j'
 
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-zipkin'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-zipkin
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-zipkin', version: '2.1.0.RELEASE'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth'
 
 
