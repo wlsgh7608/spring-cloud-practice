@@ -4,6 +4,16 @@ server:
 spring:
   application:
     name: user-service
+
+  zipkin:
+    base-url: http://127.0.0.1:9491
+    enabled: true
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+
   config:
     import: "optional:configserver:"
   rabbitmq:
