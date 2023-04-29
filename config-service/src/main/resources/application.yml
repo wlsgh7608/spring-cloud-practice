@@ -18,8 +18,8 @@ spring:
         native:
           search-locations: file:///${user.home}/Desktop/config_folder/native-file-repo
         git:
+          default-label: master
           uri: https://github.com/wlsgh7608/spring-cloud-config.git
-management:
   endpoints:
     web:
       exposure:
